@@ -3,1065 +3,648 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Musyawarah & Toleransi - Media Pembelajaran</title>
+    <title>Musyawarah & Toleransi: Kunci Mufakat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #6b9ef0;
-            --primary-purple: #a78bfa;
-            --primary-pink: #f0a8d8;
-            --primary-green: #7dd3a4;
-            --primary-orange: #fab3a1;
-            --primary-red: #f5949a;
-            --primary-yellow: #ffd48a;
-            --primary-teal: #88d4c7;
-            
-            --light-blue: #e6f0ff;
-            --light-purple: #f3ebff;
-            --light-pink: #fde8f5;
-            --light-green: #e8f5f0;
-            --light-orange: #ffe8d9;
-            --light-red: #ffe8eb;
-            --light-yellow: #fff5e0;
-            --light-teal: #e6f8f5;
-            
-            --dark-bg: #f8f9fa;
-            --light-bg: #ffffff;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #f3f5f8 100%);
-            color: #4a5568;
-            line-height: 1.6;
-            min-height: 100vh;
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            color: #334155; /* Slate 700 */
         }
-
-        .header {
-            background: linear-gradient(135deg, #a78bfa 0%, #6b9ef0 50%, #88d4c7 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            border-bottom: 5px solid #ffd48a;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.95;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border-top: 5px solid;
-            animation: slideIn 0.6s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section.blue {
-            border-top-color: #6b9ef0;
-        }
-
-        .section.purple {
-            border-top-color: #a78bfa;
-        }
-
-        .section.pink {
-            border-top-color: #f0a8d8;
-        }
-
-        .section.green {
-            border-top-color: #7dd3a4;
-        }
-
-        .section.orange {
-            border-top-color: #fab3a1;
-        }
-
-        .section.teal {
-            border-top-color: #88d4c7;
-        }
-
-        h2 {
-            color: #4a5568;
-            font-size: 2em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h3 {
-            color: #5a6a7d;
-            font-size: 1.5em;
-            margin: 20px 0 15px 0;
-        }
-
-        h4 {
-            color: #6b7a8d;
-            font-size: 1.1em;
-            margin: 15px 0 10px 0;
-        }
-
-        /* Kurikulum Section */
-        .curriculum-box {
-            background: linear-gradient(135deg, #f3ebff 0%, #fde8f5 100%);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 5px solid #a78bfa;
-        }
-
-        .objective-list {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .objective-list li {
-            padding: 12px;
-            margin: 10px 0;
-            background: linear-gradient(90deg, #e6f0ff 0%, #fff5e0 100%);
-            border-radius: 8px;
-            border-left: 4px solid #ffd48a;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .objective-list li::before {
-            content: "✓";
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, #ffd48a 0%, #fab3a1 100%);
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            flex-shrink: 0;
-            font-weight: bold;
-        }
-
-        /* Materi Cards */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .card {
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            color: white;
-            font-weight: 600;
-            text-align: center;
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        
+        .chart-container {
             position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
             width: 100%;
-            height: 100%;
-            transition: left 0.3s ease;
-            z-index: -1;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
         }
 
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        /* Custom scrollbar for better UX */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
         }
 
-        .card.card-blue {
-            background: linear-gradient(135deg, #6b9ef0 0%, #5a8fd8 100%);
+        .card-hover {
+            transition: all 0.3s ease;
         }
-
-        .card.card-pink {
-            background: linear-gradient(135deg, #f0a8d8 0%, #e899c8 100%);
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-
-        .card.card-green {
-            background: linear-gradient(135deg, #7dd3a4 0%, #6bc599 100%);
+        
+        /* Animation for content switching */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
-
-        .card h4 {
-            color: white;
-            margin: 0;
-            font-size: 1.3em;
-        }
-
-        .card p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.95em;
-            margin: 10px 0 0 0;
-            font-weight: normal;
-        }
-
-        .card-content {
-            background: white;
-            color: #1e293b;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 15px;
-            display: none;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .card-content.active {
-            display: block;
-        }
-
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .card-content h5 {
-            color: #0f172a;
-            font-size: 1.1em;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .card-content ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .card-content ul li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .card-content ul li::before {
-            content: "◆";
-            position: absolute;
-            left: 0;
-            font-size: 0.8em;
-        }
-
-        .card-blue .card-content ul li::before {
-            color: #6b9ef0;
-        }
-
-        .card-pink .card-content ul li::before {
-            color: #f0a8d8;
-        }
-
-        .card-green .card-content ul li::before {
-            color: #7dd3a4;
-        }
-
-        /* Laboratorium Section */
-        .lab-section {
-            background: linear-gradient(135deg, #e6f0ff 0%, #e6f8f5 100%);
-            padding: 30px;
-            border-radius: 12px;
-            margin: 20px 0;
-        }
-
-        .slider-container {
-            margin: 30px 0;
-            text-align: center;
-        }
-
-        .slider-label {
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: linear-gradient(90deg, #f5949a 0%, #ffd48a 50%, #7dd3a4 100%);
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: white;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-            border: 3px solid #6b9ef0;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: white;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-            border: 3px solid #6b9ef0;
-        }
-
-        .result-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border: 3px solid;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            color: #4a5568;
-        }
-
-        .indicators {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .indicator-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #88d4c7;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .indicator-icon {
-            font-size: 1.5em;
-        }
-
-        /* Sikap Section */
-        .attitude-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .attitude-column {
-            padding: 0;
-        }
-
-        .attitude-column h4 {
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
-            color: white;
-            margin-bottom: 15px;
-        }
-
-        .attitude-column.support h4 {
-            background: linear-gradient(135deg, #7dd3a4 0%, #6bc599 100%);
-        }
-
-        .attitude-column.hinder h4 {
-            background: linear-gradient(135deg, #f5949a 0%, #f08590 100%);
-        }
-
-        .attitude-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .attitude-list li {
-            background: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border-left: 4px solid;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .attitude-column.support .attitude-list li {
-            border-left-color: #7dd3a4;
-            background: linear-gradient(90deg, #e8f5f0 0%, white 100%);
-        }
-
-        .attitude-column.support .attitude-list li:hover {
-            background: linear-gradient(90deg, #d6f0e8 0%, white 100%);
-        }
-
-        .attitude-column.hinder .attitude-list li {
-            border-left-color: #f5949a;
-            background: linear-gradient(90deg, #ffe8eb 0%, white 100%);
-        }
-
-        .attitude-column.hinder .attitude-list li:hover {
-            background: linear-gradient(90deg, #ffd9dd 0%, white 100%);
-        }
-
-        .attitude-list li strong {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        /* Case Study Section */
-        .case-study {
-            background: linear-gradient(135deg, #ffe8d9 0%, #fff5e0 100%);
-            padding: 25px;
-            border-radius: 12px;
-            margin: 20px 0;
-            border-left: 5px solid #fab3a1;
-        }
-
-        .case-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border: 2px solid #fab3a1;
-        }
-
-        .case-content h5 {
-            color: #fab3a1;
-            margin-bottom: 10px;
-        }
-
-        .case-content p {
-            color: #4a5568;
-            margin-bottom: 10px;
-        }
-
-        .answer-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .option {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #e0e7f1;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            color: #4a5568;
-        }
-
-        .option:hover {
-            border-color: #fab3a1;
-            background: #fffbf7;
-        }
-
-        .option.selected {
-            background: linear-gradient(135deg, #ffe8d9 0%, #fff5e0 100%);
-            border-color: #fab3a1;
-        }
-
-        .feedback {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .feedback.show {
-            display: block;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .feedback.correct {
-            background: #e8f5f0;
-            border-left: 4px solid #7dd3a4;
-            color: #3d7a63;
-        }
-
-        .feedback.wrong {
-            background: #ffe8eb;
-            border-left: 4px solid #f5949a;
-            color: #8d4a52;
-        }
-
-        /* Refleksi Section */
-        .reflection-section {
-            background: linear-gradient(135deg, #fde8f5 0%, #f3ebff 100%);
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            border: 3px dashed #f0a8d8;
-        }
-
-        .reflection-quote {
-            font-size: 1.5em;
-            font-weight: 600;
-            color: #4a5568;
-            margin: 20px 0;
-            font-style: italic;
-            line-height: 1.8;
-        }
-
-        .reflection-question {
-            font-size: 1.3em;
-            color: #a78bfa;
-            font-weight: 600;
-            margin-top: 20px;
-        }
-
-        .reflection-answer {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .reflection-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 1em;
-        }
-
-        .reflection-btn.yes {
-            background: linear-gradient(135deg, #7dd3a4 0%, #6bc599 100%);
-            color: white;
-        }
-
-        .reflection-btn.yes:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(125, 211, 164, 0.2);
-        }
-
-        .reflection-btn.need-work {
-            background: linear-gradient(135deg, #fab3a1 0%, #f5a090 100%);
-            color: white;
-        }
-
-        .reflection-btn.need-work:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(250, 179, 161, 0.2);
-        }
-
-        .reflection-response {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .reflection-response.show {
-            display: block;
-        }
-
-        .reflection-response.positive {
-            background: #e8f5f0;
-            color: #3d7a63;
-            border-left: 4px solid #7dd3a4;
-        }
-
-        .reflection-response.encouragement {
-            background: #ffe8d9;
-            color: #8d6e45;
-            border-left: 4px solid #fab3a1;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            h2 {
-                font-size: 1.5em;
-            }
-
-            .attitude-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .answer-options {
-                grid-template-columns: 1fr;
-            }
-
-            .section {
-                padding: 20px;
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
+    <!-- Chosen Palette: "Soft Education" - Slate (Background/Text), Emerald (Positive), Rose (Negative), Sky (Primary UI) -->
+    <!-- Application Structure Plan: 
+         1. Hero Section
+         2. Curriculum Roadmap (TP/ATP)
+         3. Knowledge Hub (Tabs) - ENHANCED CONTENT
+         4. Simulation Lab (Dynamic Chart)
+         5. Behavior Sorter (Interactive List)
+         6. Case Study (Decision Branching)
+         7. Reflection & Summary
+         8. Footer with Author Credit
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
-<body>
-    <div class="header">
-        <h1>🤝 Musyawarah & Toleransi 🤝</h1>
-        <p>Kunci untuk Mencapai Mufakat Bersama</p>
-    </div>
+<body class="antialiased selection:bg-sky-200">
 
-    <div class="container">
-        <!-- KURIKULUM SECTION -->
-        <div class="section blue">
-            <h2>🎯 Kurikulum & Tujuan Pembelajaran</h2>
-            
-            <div class="curriculum-box">
-                <h4>Tujuan Pembelajaran (TP) Utama:</h4>
-                <p style="font-weight: 600; color: #7c3aed;">
-                    "Peserta didik mampu menjelaskan pentingnya menerapkan sikap toleransi untuk mencapai mufakat dalam musyawarah."
+    <!-- Navbar/Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <h1 class="text-xl font-bold text-sky-600">🎓 Kelas Musyawarah</h1>
+            <nav class="hidden md:flex space-x-4">
+                <button onclick="scrollToSection('section-materi')" class="text-slate-500 hover:text-sky-600 font-semibold transition">Materi</button>
+                <button onclick="scrollToSection('section-simulasi')" class="text-slate-500 hover:text-sky-600 font-semibold transition">Simulasi</button>
+                <button onclick="scrollToSection('section-kasus')" class="text-slate-500 hover:text-sky-600 font-semibold transition">Studi Kasus</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
+
+        <!-- Hero Section -->
+        <section class="text-center space-y-4 py-10 bg-gradient-to-b from-sky-50 to-white rounded-3xl">
+            <div class="inline-block bg-sky-100 text-sky-800 px-4 py-1 rounded-full text-sm font-bold mb-2">Pendidikan Kewarganegaraan</div>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight">Musyawarah & Toleransi</h2>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                Kunci utama untuk mencapai kesepakatan bersama. Mari belajar bagaimana menghargai pendapat teman untuk mencapai <strong>Mufakat</strong>.
+            </p>
+            <div class="pt-4">
+                <button onclick="scrollToSection('section-kurikulum')" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105">
+                    Mulai Belajar 🚀
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION: Curriculum / TP & ATP -->
+        <section id="section-kurikulum" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center">
+                    <span class="mr-2">🎯</span> Kurikulum Pembelajaran
+                </h3>
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Peta Konsep</span>
+            </div>
+            <div class="p-6 md:p-8">
+                <!-- TP Utama -->
+                <div class="mb-8 bg-sky-50 rounded-xl p-5 border-l-4 border-sky-500">
+                    <h4 class="text-sky-800 font-bold mb-2 text-sm uppercase tracking-wide">Tujuan Pembelajaran (TP) Utama</h4>
+                    <p class="text-lg text-slate-700 font-semibold italic">
+                        "Peserta didik mampu menjelaskan pentingnya menerapkan sikap toleransi untuk mencapai mufakat dalam musyawarah."
+                    </p>
+                </div>
+
+                <!-- ATP Timeline -->
+                <div class="relative">
+                    <h4 class="text-slate-800 font-bold mb-6 text-sm uppercase tracking-wide border-b pb-2">Alur Tujuan Pembelajaran (ATP)</h4>
+                    
+                    <!-- Vertical Line -->
+                    <div class="absolute left-4 top-12 bottom-0 w-0.5 bg-slate-200"></div>
+
+                    <div class="space-y-6">
+                        <!-- TP 1.1 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-2 top-1 w-5 h-5 bg-white border-4 border-sky-400 rounded-full z-10"></div>
+                            <span class="inline-block bg-sky-100 text-sky-700 text-xs font-bold px-2 py-0.5 rounded mb-1">TP 1.1</span>
+                            <p class="text-slate-600 text-sm">Peserta didik mampu menyebutkan <strong>pengertian musyawarah dan mufakat</strong> dengan bahasa sederhana.</p>
+                        </div>
+
+                        <!-- TP 1.2 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-2 top-1 w-5 h-5 bg-white border-4 border-sky-400 rounded-full z-10"></div>
+                            <span class="inline-block bg-sky-100 text-sky-700 text-xs font-bold px-2 py-0.5 rounded mb-1">TP 1.2</span>
+                            <p class="text-slate-600 text-sm">Peserta didik mampu mengidentifikasi <strong>contoh sikap toleransi</strong> (saling menghargai) di lingkungan kelas.</p>
+                        </div>
+
+                        <!-- TP 2.1 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-2 top-1 w-5 h-5 bg-white border-4 border-indigo-400 rounded-full z-10"></div>
+                            <span class="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-0.5 rounded mb-1">TP 2.1</span>
+                            <p class="text-slate-600 text-sm">Peserta didik mampu menjelaskan <strong>akibat jika tidak ada toleransi</strong> dalam sebuah diskusi (misal: terjadi pertengkaran).</p>
+                        </div>
+
+                        <!-- TP 2.2 (Main) -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-0 w-9 h-9 bg-emerald-100 border-4 border-emerald-500 rounded-full z-10 flex items-center justify-center -ml-0.5">
+                                <span class="text-emerald-700 text-lg">★</span>
+                            </div>
+                            <span class="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded mb-1 border border-emerald-200">TP 2.2 (Utama)</span>
+                            <p class="text-slate-800 font-semibold text-sm">Peserta didik mampu menjelaskan <strong>pentingnya menerapkan sikap toleransi</strong> untuk mencapai mufakat dalam musyawarah.</p>
+                        </div>
+
+                        <!-- TP 3.1 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-2 top-1 w-5 h-5 bg-white border-4 border-rose-400 rounded-full z-10"></div>
+                            <span class="inline-block bg-rose-100 text-rose-700 text-xs font-bold px-2 py-0.5 rounded mb-1">TP 3.1</span>
+                            <p class="text-slate-600 text-sm">Peserta didik mampu <strong>membedakan</strong> antara sikap yang mendukung mufakat dan sikap yang menghambat mufakat.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: KNOWLEDGE HUB (Interactive Definitions - ENHANCED) -->
+        <section id="section-materi" class="scroll-mt-24">
+            <div class="mb-8 border-l-4 border-sky-500 pl-4">
+                <h3 class="text-2xl font-bold text-slate-800">1. Pendalaman Materi</h3>
+                <p class="text-slate-600 mt-2">Pelajari materi lengkap di bawah ini sesuai <span class="bg-sky-100 text-sky-800 px-1 rounded font-bold text-xs">TP 1.1</span> dan <span class="bg-sky-100 text-sky-800 px-1 rounded font-bold text-xs">TP 2.2</span>. Klik kartu untuk membuka detail.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1: Musyawarah -->
+                <div onclick="activateConcept('musyawarah')" id="card-musyawarah" class="bg-white p-6 rounded-xl shadow-md border-2 border-transparent cursor-pointer hover:border-sky-300 transition-all card-hover group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🗣️</div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">Musyawarah</h4>
+                    <p class="text-slate-500 text-sm">Pengertian, Ciri-ciri, dan Tata Cara.</p>
+                </div>
+
+                <!-- Card 2: Mufakat -->
+                <div onclick="activateConcept('mufakat')" id="card-mufakat" class="bg-white p-6 rounded-xl shadow-md border-2 border-transparent cursor-pointer hover:border-emerald-300 transition-all card-hover group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🤝</div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">Mufakat & Voting</h4>
+                    <p class="text-slate-500 text-sm">Hasil Musyawarah & Alternatifnya.</p>
+                </div>
+
+                <!-- Card 3: Toleransi -->
+                <div onclick="activateConcept('toleransi')" id="card-toleransi" class="bg-white p-6 rounded-xl shadow-md border-2 border-transparent cursor-pointer hover:border-rose-300 transition-all card-hover group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">👂</div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">Toleransi (Kunci)</h4>
+                    <p class="text-slate-500 text-sm">Pentingnya Toleransi & Akibat Buruknya.</p>
+                </div>
+            </div>
+
+            <!-- Detailed Content Area (Dynamic) -->
+            <div id="concept-detail" class="mt-8 bg-white p-8 rounded-2xl shadow-lg border border-slate-100 min-h-[300px] flex items-start transition-all duration-300">
+                <div class="w-full">
+                    <h4 id="detail-title" class="text-3xl font-bold text-sky-600 mb-6 border-b pb-4">Pilih topik di atas!</h4>
+                    <div id="detail-content" class="text-slate-600 text-lg leading-relaxed">
+                        Klik salah satu kartu di atas untuk melihat penjelasan lengkap, contoh, dan poin pentingnya.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: SIMULATION LAB (Chart.js + Slider) -->
+        <section id="section-simulasi" class="scroll-mt-24">
+            <div class="mb-8 border-l-4 border-emerald-500 pl-4">
+                <h3 class="text-2xl font-bold text-slate-800">2. Laboratorium Toleransi</h3>
+                <p class="text-slate-600 mt-2">
+                    Eksperimen <span class="bg-emerald-100 text-emerald-800 px-1 rounded font-bold text-xs">TP 2.1 & 2.2</span>. Gunakan <strong>slider</strong> untuk melihat dampak toleransi terhadap keberhasilan mufakat.
                 </p>
             </div>
 
-            <h3 style="color: #0084ff; margin-top: 30px;">Alur Tujuan Pembelajaran (ATP):</h3>
-            <ul class="objective-list">
-                <li><strong>TP 1.1:</strong> Peserta didik mampu menyebutkan pengertian musyawarah dan mufakat dengan bahasa sederhana.</li>
-                <li><strong>TP 1.2:</strong> Peserta didik mampu mengidentifikasi contoh sikap toleransi (saling menghargai) di lingkungan kelas.</li>
-                <li><strong>TP 2.1:</strong> Peserta didik mampu menjelaskan akibat jika tidak ada toleransi dalam sebuah diskusi.</li>
-                <li><strong>TP 2.2:</strong> Peserta didik mampu menjelaskan pentingnya menerapkan sikap toleransi untuk mencapai mufakat dalam musyawarah.</li>
-                <li><strong>TP 3.1:</strong> Peserta didik mampu membedakan antara sikap yang mendukung mufakat dan sikap yang menghambat mufakat.</li>
-            </ul>
-        </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-6 md:p-10 rounded-3xl shadow-sm border border-slate-200">
+                
+                <!-- Controls Side -->
+                <div class="space-y-6">
+                    <div>
+                        <label for="toleranceRange" class="block text-sm font-medium text-slate-700 mb-2">Tingkat Toleransi Kelas:</label>
+                        <input type="range" id="toleranceRange" min="0" max="100" value="50" class="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sky-500">
+                        <div class="flex justify-between text-xs text-slate-500 mt-1">
+                            <span>Egois (0%)</span>
+                            <span>Saling Menghargai (100%)</span>
+                        </div>
+                    </div>
 
-        <!-- PENDALAMAN MATERI SECTION -->
-        <div class="section purple">
-            <h2>📚 1. Pendalaman Materi</h2>
-            <p style="color: #1e293b; margin: 15px 0;">Pelajari materi lengkap di bawah ini. Klik kartu untuk membuka detail sesuai dengan Tujuan Pembelajaran.</p>
-            
-            <div class="cards-grid">
-                <div class="card card-blue" onclick="toggleCard(this)">
-                    <h4>🏛️ Musyawarah</h4>
-                    <p>Pengertian, Ciri-ciri, dan Tata Cara</p>
-                    <div class="card-content">
-                        <h5>📖 Pengertian Musyawarah:</h5>
-                        <p>Musyawarah adalah proses pengambilan keputusan bersama dengan saling mendengarkan dan menghargai setiap pendapat anggota kelompok.</p>
-                        
-                        <h5>✨ Ciri-ciri Musyawarah:</h5>
-                        <ul>
-                            <li>Ada minimal dua orang atau lebih</li>
-                            <li>Membahas masalah atau kepentingan bersama</li>
-                            <li>Saling berbagi pendapat dan ide</li>
-                            <li>Menghargai setiap pendapat yang berbeda</li>
-                            <li>Bertujuan mencapai kesepakatan (mufakat)</li>
-                        </ul>
+                    <div id="simulation-text" class="bg-slate-50 p-5 rounded-xl border border-slate-200 transition-all">
+                        <h5 class="font-bold text-slate-800 mb-2">Status Kelas:</h5>
+                        <p class="text-slate-600" id="status-desc">Geser slider untuk melihat prediksi...</p>
+                    </div>
 
-                        <h5>⚙️ Tata Cara Musyawarah:</h5>
-                        <ul>
-                            <li><strong>Persiapan:</strong> Tentukan masalah yang akan dibahas</li>
-                            <li><strong>Pelaksanaan:</strong> Setiap orang berbicara sesuai giliran</li>
-                            <li><strong>Diskusi:</strong> Mendengarkan dan menanggapi pendapat orang lain</li>
-                            <li><strong>Pengambilan Keputusan:</strong> Mencari solusi yang diterima semua</li>
-                            <li><strong>Kesimpulan:</strong> Bulatkan kesepakatan bersama</li>
+                    <div class="space-y-2">
+                        <h5 class="font-bold text-sm text-slate-800">Indikator Toleransi (TP 1.2):</h5>
+                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Mendengarkan saat teman bicara.</li>
+                            <li>Tidak mengejek pendapat beda.</li>
+                            <li>Sabar menunggu giliran.</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="card card-pink" onclick="toggleCard(this)">
-                    <h4>✅ Mufakat & Voting</h4>
-                    <p>Hasil Musyawarah & Alternatifnya</p>
-                    <div class="card-content">
-                        <h5>❤️ Apa itu Mufakat?</h5>
-                        <p>Mufakat adalah kesepakatan hasil musyawarah yang diterima dan disetujui oleh semua anggota kelompok tanpa ada yang merasa keberatan.</p>
-
-                        <h5>🌟 Keuntungan Mufakat:</h5>
-                        <ul>
-                            <li>Semua pihak merasa didengarkan dan dihargai</li>
-                            <li>Keputusan yang diambil akan didukung bersama</li>
-                            <li>Menciptakan kerukunan dan persatuan</li>
-                            <li>Menghindari perpecahan dalam kelompok</li>
-                        </ul>
-
-                        <h5>🗳️ Alternatif: Voting (Suara Terbanyak)</h5>
-                        <p>Jika sulit mencapai mufakat, bisa dilakukan voting dengan syarat:</p>
-                        <ul>
-                            <li>Semua pihak sudah diberikan kesempatan bicara</li>
-                            <li>Pihak yang kalah tetap melaksanakan keputusan</li>
-                            <li>Tidak ada dendam di antara pihak yang berbeda suara</li>
-                        </ul>
+                <!-- Visualization Side -->
+                <div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center">
+                    <h5 class="text-center font-bold text-slate-600 mb-4">Probabilitas Hasil Musyawarah</h5>
+                    <div class="chart-container">
+                        <canvas id="impactChart"></canvas>
                     </div>
-                </div>
-
-                <div class="card card-green" onclick="toggleCard(this)">
-                    <h4>❤️ Toleransi (Kunci)</h4>
-                    <p>Pentingnya Toleransi & Akibat Buruknya</p>
-                    <div class="card-content">
-                        <h5>🔑 Apa itu Toleransi?</h5>
-                        <p>Toleransi adalah sikap saling menghargai, menghormati, dan menerima perbedaan pendapat dalam musyawarah.</p>
-
-                        <h5>💪 Bentuk Toleransi dalam Musyawarah:</h5>
-                        <ul>
-                            <li>Mendengarkan teman bicara sampai selesai</li>
-                            <li>Tidak mengejek atau meremehkan pendapat berbeda</li>
-                            <li>Sabar menunggu giliran bicara</li>
-                            <li>Menerima perbedaan pandangan dengan lapang dada</li>
-                            <li>Bersedia menerima keputusan bersama walaupun berbeda dengan pendapat kita</li>
-                        </ul>
-
-                        <h5>⚠️ Akibat Tidak Ada Toleransi:</h5>
-                        <ul>
-                            <li>Terjadi pertengkaran dan permusuhan</li>
-                            <li>Kelompok menjadi pecah belah</li>
-                            <li>Tidak ada kesepakatan (mufakat)</li>
-                            <li>Tercipta suasana yang tidak kondusif untuk belajar</li>
-                            <li>Hubungan antar teman menjadi rusak</li>
-                        </ul>
-                    </div>
+                    <p class="text-xs text-center text-slate-400 mt-4 italic">Visualisasi data berdasarkan logika hubungan sebab-akibat toleransi.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- LABORATORIUM TOLERANSI -->
-        <div class="section teal">
-            <h2>🧪 2. Laboratorium Toleransi</h2>
-            <p style="color: #1e293b; margin: 15px 0;">Eksperimen interaktif (TP 2.1 & 2.2). Geser slider untuk melihat dampak toleransi terhadap keberhasilan mufakat!</p>
-
-            <div class="lab-section">
-                <h3 style="color: #0f172a; margin-top: 0;">📊 Status Kelas: Geser Slider untuk Melihat Prediksi</h3>
-
-                <div class="slider-container">
-                    <div class="slider-label">Tingkat Toleransi Kelas: <span id="toleranceValue" style="color: #0084ff; font-size: 1.2em;">50%</span></div>
-                    <input type="range" id="toleranceSlider" min="0" max="100" value="50" oninput="updateTolerance()">
-                </div>
-
-                <div class="result-box" id="resultBox" style="border-color: #fbbf24;">
-                    <span id="resultText">Toleransi Sedang - Kesepakatan Mungkin Tercapai 50%</span>
-                </div>
-
-                <h3 style="color: #0f172a; margin-top: 30px;">✅ Indikator Toleransi (TP 1.2):</h3>
-                <div class="indicators">
-                    <div class="indicator-item">
-                        <div class="indicator-icon">👂</div>
-                        <div>
-                            <strong>Mendengarkan</strong><br>
-                            <small>Saat teman bicara tanpa menyela</small>
-                        </div>
-                    </div>
-                    <div class="indicator-item">
-                        <div class="indicator-icon">🙅</div>
-                        <div>
-                            <strong>Tidak Mengejek</strong><br>
-                            <small>Pendapat berbeda tetap dihargai</small>
-                        </div>
-                    </div>
-                    <div class="indicator-item">
-                        <div class="indicator-icon">⏳</div>
-                        <div>
-                            <strong>Sabar</strong><br>
-                            <small>Menunggu giliran berbicara dengan tenang</small>
-                        </div>
-                    </div>
-                    <div class="indicator-item">
-                        <div class="indicator-icon">🤝</div>
-                        <div>
-                            <strong>Menerima Keputusan</strong><br>
-                            <small>Lapang dada walaupun berbeda pandangan</small>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 style="color: #0f172a; margin-top: 30px;">📈 Probabilitas Hasil Musyawarah:</h3>
-                <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 15px;">
-                    <div id="probabilityText" style="color: #1e293b; font-weight: 600;">
-                        <p>Visualisasi data berdasarkan logika hubungan sebab-akibat toleransi:</p>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
-                        <div style="background: #d1fae5; padding: 15px; border-radius: 8px; border-left: 4px solid #10b981;">
-                            <div style="color: #065f46; font-weight: 600; margin-bottom: 5px;">✅ Kesepakatan Tercapai</div>
-                            <div style="font-size: 1.8em; color: #10b981; font-weight: bold;" id="successRate">50%</div>
-                        </div>
-                        <div style="background: #fee2e2; padding: 15px; border-radius: 8px; border-left: 4px solid #ef4444;">
-                            <div style="color: #7f1d1d; font-weight: 600; margin-bottom: 5px;">❌ Konflik/Deadlock</div>
-                            <div style="font-size: 1.8em; color: #ef4444; font-weight: bold;" id="failureRate">50%</div>
-                        </div>
-                    </div>
-                </div>
+        <!-- SECTION 3: BEHAVIOR CHECK (Sorting Activity) -->
+        <section class="scroll-mt-24">
+            <div class="mb-8 border-l-4 border-rose-500 pl-4">
+                <h3 class="text-2xl font-bold text-slate-800">3. Sikap Pendukung vs Penghambat</h3>
+                <p class="text-slate-600 mt-2">
+                    Latihan <span class="bg-rose-100 text-rose-800 px-1 rounded font-bold text-xs">TP 3.1</span>. Kenali mana sikap yang membantu dan mana yang merusak mufakat.
+                </p>
             </div>
-        </div>
 
-        <!-- SIKAP SECTION -->
-        <div class="section orange">
-            <h2>⚖️ 3. Sikap Pendukung vs Penghambat</h2>
-            <p style="color: #1e293b; margin: 15px 0;">Latihan TP 3.1. Kenali mana sikap yang membantu dan mana yang merusak mufakat!</p>
-
-            <div class="attitude-grid">
-                <div class="attitude-column support">
-                    <h4>✅ Mendukung Mufakat</h4>
-                    <ul class="attitude-list">
-                        <li>
-                            <strong>Mendengarkan teman sampai selesai bicara</strong><br>
-                            <small>Memberi perhatian penuh dan tidak menyela</small>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Positive Column -->
+                <div class="bg-emerald-50 rounded-2xl p-6 border border-emerald-100">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 text-xl font-bold">✓</div>
+                        <h4 class="text-xl font-bold text-emerald-800">Mendukung Mufakat</h4>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start space-x-3 bg-white p-3 rounded-lg shadow-sm">
+                            <span class="text-emerald-500 font-bold">1.</span>
+                            <span class="text-slate-700">Mendengarkan teman sampai selesai bicara.</span>
                         </li>
-                        <li>
-                            <strong>Berbicara dengan bahasa yang sopan</strong><br>
-                            <small>Gunakan kata-kata yang menghormati semua pihak</small>
+                        <li class="flex items-start space-x-3 bg-white p-3 rounded-lg shadow-sm">
+                            <span class="text-emerald-500 font-bold">2.</span>
+                            <span class="text-slate-700">Berbicara dengan bahasa yang sopan.</span>
                         </li>
-                        <li>
-                            <strong>Menerima keputusan bersama dengan lapang dada</strong><br>
-                            <small>Tidak ngambek walaupun pendapat kita ditolak</small>
-                        </li>
-                        <li>
-                            <strong>Memberikan alasan yang jelas dan logis</strong><br>
-                            <small>Jelaskan mengapa pendapat kita penting</small>
-                        </li>
-                        <li>
-                            <strong>Apresiasi pendapat orang lain</strong><br>
-                            <small>Katakan "Pendapatmu bagus!" atau "Aku setuju..."</small>
+                        <li class="flex items-start space-x-3 bg-white p-3 rounded-lg shadow-sm">
+                            <span class="text-emerald-500 font-bold">3.</span>
+                            <span class="text-slate-700">Menerima keputusan bersama dengan lapang dada.</span>
                         </li>
                     </ul>
                 </div>
 
-                <div class="attitude-column hinder">
-                    <h4>❌ Menghambat Mufakat</h4>
-                    <ul class="attitude-list">
-                        <li>
-                            <strong>Memotong pembicaraan orang lain</strong><br>
-                            <small>Berbicara sebelum teman selesai bicara</small>
+                <!-- Negative Column -->
+                <div class="bg-rose-50 rounded-2xl p-6 border border-rose-100">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-600 text-xl font-bold">✕</div>
+                        <h4 class="text-xl font-bold text-rose-800">Menghambat Mufakat</h4>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start space-x-3 bg-white p-3 rounded-lg shadow-sm">
+                            <span class="text-rose-500 font-bold">1.</span>
+                            <span class="text-slate-700">Memotong pembicaraan orang lain.</span>
                         </li>
-                        <li>
-                            <strong>Memaksakan kehendak sendiri</strong><br>
-                            <small>Berkata "Harus sesuai keinginanku!" atau "Tidak boleh lain!"</small>
+                        <li class="flex items-start space-x-3 bg-white p-3 rounded-lg shadow-sm">
+                            <span class="text-rose-500 font-bold">2.</span>
+                            <span class="text-slate-700">Memaksakan kehendak sendiri ("Harus mau!").</span>
                         </li>
-                        <li>
-                            <strong>Marah atau ngambek jika usulnya ditolak</strong><br>
-                            <small>Menunjukkan wajah cemberut atau berteriak</small>
-                        </li>
-                        <li>
-                            <strong>Mengejek atau meremehkan pendapat berbeda</strong><br>
-                            <small>Berkata "Pendapatmu bodoh!" atau tertawa mengejek</small>
-                        </li>
-                        <li>
-                            <strong>Tidak mau mendengarkan penjelasan orang lain</strong><br>
-                            <small>Tutup telinga dan tidak peduli</small>
+                        <li class="flex items-start space-x-3 bg-white p-3 rounded-lg shadow-sm">
+                            <span class="text-rose-500 font-bold">3.</span>
+                            <span class="text-slate-700">Marah atau ngambek jika usulnya ditolak.</span>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- CASE STUDY SECTION -->
-        <div class="section pink">
-            <h2>📖 4. Studi Kasus: Liburan Sekolah</h2>
-            <p style="color: #1e293b; margin: 15px 0;">Bantu Budi mengambil keputusan yang tepat agar kelas tetap rukun!</p>
+        <!-- SECTION 4: CASE STUDY (Interactive Story) -->
+        <section id="section-kasus" class="scroll-mt-24">
+            <div class="mb-8 border-l-4 border-indigo-500 pl-4">
+                <h3 class="text-2xl font-bold text-slate-800">4. Studi Kasus: Liburan Sekolah</h3>
+                <p class="text-slate-600 mt-2">
+                    Bantu Budi mengambil keputusan yang tepat agar kelas tetap rukun.
+                </p>
+            </div>
 
-            <div class="case-study">
-                <h4>🎬 Situasi:</h4>
-                <div class="case-content">
-                    <p>Satu kelas sedang berdiskusi tentang tujuan liburan musim semi. <strong>Budi</strong> sangat ingin pergi ke <strong>🏖️ Pantai</strong> karena ingin bermain air dan memancing. Namun, <strong>Siti</strong> dan kebanyakan teman lain ingin pergi ke <strong>🏛️ Museum</strong> karena ingin belajar tentang sejarah lokal.</p>
-                    <p><strong>Budi merasa kecewa dan mulai kesal.</strong> Apa yang seharusnya dilakukan Budi agar kelas tetap rukun dan mencapai keputusan yang baik?</p>
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-slate-200">
+                <div class="bg-indigo-600 p-6 text-white">
+                    <h4 class="text-xl font-bold">Situasi:</h4>
+                    <p class="mt-2 opacity-90">Satu kelas sedang berdiskusi tujuan liburan. Budi sangat ingin ke <strong class="text-yellow-300">Pantai</strong>, tetapi Siti dan kebanyakan teman ingin ke <strong class="text-yellow-300">Museum</strong>.</p>
                 </div>
-
-                <h4 style="color: #f97316; margin-top: 20px;">⚡ Pilih jawaban terbaik:</h4>
-                <div class="answer-options">
-                    <div class="option" onclick="selectAnswer(1, this)">
-                        <strong>A. Budi tetap memaksa kehendak:</strong><br>
-                        "Harus ke Pantai! Aku tidak mau ke Museum!"<br>
-                        <small style="color: #999;">Memaksakan kehendak sendiri</small>
+                
+                <div class="p-8">
+                    <div id="story-stage-1">
+                        <h5 class="text-lg font-bold text-slate-800 mb-4">Apa yang harus dilakukan Budi?</h5>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <button onclick="resolveCase('bad')" class="p-6 border-2 border-slate-200 rounded-xl hover:border-rose-400 hover:bg-rose-50 transition-all text-left group">
+                                <span class="block font-bold text-rose-600 mb-2 group-hover:underline">Pilihan A</span>
+                                <p class="text-slate-600 text-sm">Berteriak: "Pokoknya harus ke Pantai! Pantai lebih seru dari Museum!"</p>
+                            </button>
+                            <button onclick="resolveCase('good')" class="p-6 border-2 border-slate-200 rounded-xl hover:border-emerald-400 hover:bg-emerald-50 transition-all text-left group">
+                                <span class="block font-bold text-emerald-600 mb-2 group-hover:underline">Pilihan B</span>
+                                <p class="text-slate-600 text-sm">Berkata: "Aku ingin ke Pantai, tapi ayo kita voting. Aku ikut suara terbanyak."</p>
+                            </button>
+                        </div>
                     </div>
-                    <div class="option" onclick="selectAnswer(2, this)">
-                        <strong>B. Budi mendengarkan dan bermusyawarah:</strong><br>
-                        "Oke, aku dengarkan. Mengapa kalian ingin ke Museum?"<br>
-                        <small style="color: #999;">Toleran dan terbuka</small>
+
+                    <div id="story-result" class="hidden animate-fade-in">
+                        <div id="result-content" class="text-center py-6">
+                            <!-- Dynamic Content Inserted Here -->
+                        </div>
+                        <button onclick="resetCase()" class="mx-auto block mt-4 text-sm text-indigo-600 font-semibold hover:underline">Ulangi Studi Kasus</button>
                     </div>
-                    <div class="option" onclick="selectAnswer(3, this)">
-                        <strong>C. Budi ngambek dan tidak ikut:</strong><br>
-                        "Aku tidak mau ikut! Kalian saja..."<br>
-                        <small style="color: #999;">Tidak menerima keputusan bersama</small>
-                    </div>
-                </div>
-
-                <div class="feedback" id="feedback1">
-                    <strong>❌ Jawaban Kurang Tepat</strong><br>
-                    Memaksakan kehendak akan membuat teman marah dan kelas menjadi tidak harmonis. Tidak ada kesepakatan yang baik.
-                </div>
-
-                <div class="feedback" id="feedback2">
-                    <strong>✅ Jawaban Paling Tepat!</strong><br>
-                    Budi menunjukkan sikap toleransi dengan mendengarkan pendapat teman. Dengan begitu, mereka bisa bermusyawarah dan mencari solusi bersama, misalnya: ke Museum TAPI juga membuat kunjungan ke Pantai di lain waktu. Atau setidaknya Budi menerima keputusan dengan lapang dada.
-                </div>
-
-                <div class="feedback" id="feedback3">
-                    <strong>❌ Jawaban Kurang Tepat</strong><br>
-                    Ngambek dan tidak ikut akan membuat Budi merasa sendiri dan merusak persahabatan dengan teman-teman. Sikap ini bukan toleransi.
-                </div>
-
-                <h4 style="color: #f97316; margin-top: 20px;">💡 Pembelajaran dari Kasus Ini:</h4>
-                <div style="background: #fffbeb; padding: 15px; border-radius: 8px; border-left: 4px solid #f97316; color: #92400e;">
-                    <p><strong>Musyawarah bukan tentang siapa yang menang, tapi tentang kepentingan BERSAMA.</strong></p>
-                    <p>Ketika kita menunjukkan toleransi dengan mendengarkan dan menghormati pendapat teman, kita membuka jalan untuk menemukan solusi yang lebih baik. Mungkin ada kompromi atau cara yang membuat semua pihak puas! 🎯</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- REFLEKSI DIRI SECTION -->
-        <div class="section green">
-            <div class="reflection-section">
-                <h2 style="justify-content: center;">🤔 Refleksi Diri</h2>
-                <div class="reflection-quote">
-                    "Musyawarah bukan tentang siapa yang menang,<br>tapi tentang kepentingan bersama."
-                </div>
-                <div class="reflection-question">
-                    Sudahkah kamu menunjukkan sikap toleransi hari ini? 🌟
-                </div>
-                <div class="reflection-answer">
-                    <button class="reflection-btn yes" onclick="answerReflection('yes')">✨ Ya, Sudah! ✨</button>
-                    <button class="reflection-btn need-work" onclick="answerReflection('need')">⚡ Perlu Diperbaiki ⚡</button>
-                </div>
-                <div class="reflection-response positive" id="responseYes">
-                    <strong>🎉 Luar Biasa!</strong><br>
-                    Kamu telah menunjukkan sikap toleransi hari ini. Teruskan semangat ini dan ajari teman-teman untuk juga menunjukkan toleransi. Dengan begitu, kita ciptakan kelas yang harmonis dan penuh persahabatan! 💚
-                </div>
-                <div class="reflection-response encouragement" id="responseNeed">
-                    <strong>💪 Semangat!</strong><br>
-                    Jangan khawatir! Masih ada kesempatan untuk menunjukkan toleransi. Mulai dari hal-hal kecil seperti mendengarkan teman, tidak mengejek pendapat berbeda, dan bersikap lapang dada. Hari ini adalah hari yang baru untuk berkembang! 🌱
+        <!-- SECTION 5: REFLECTION -->
+        <section class="bg-sky-50 rounded-3xl p-8 md:p-12 text-center">
+            <h3 class="text-2xl font-bold text-slate-800 mb-4">Refleksi Diri 🤔</h3>
+            <p class="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
+                "Musyawarah bukan tentang siapa yang menang, tapi tentang kepentingan bersama."
+            </p>
+            <div class="inline-flex flex-col items-center bg-white p-6 rounded-xl shadow-sm max-w-md mx-auto w-full">
+                <p class="font-bold text-slate-700 mb-4">Sudahkah kamu toleran hari ini?</p>
+                <div class="space-y-2 w-full text-left px-4">
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" class="w-5 h-5 text-sky-500 rounded focus:ring-sky-400">
+                        <span class="text-slate-600">Saya mendengarkan teman.</span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" class="w-5 h-5 text-sky-500 rounded focus:ring-sky-400">
+                        <span class="text-slate-600">Saya tidak memotong pembicaraan.</span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" class="w-5 h-5 text-sky-500 rounded focus:ring-sky-400">
+                        <span class="text-slate-600">Saya menghargai perbedaan.</span>
+                    </label>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- FOOTER -->
-        <div style="text-align: center; padding: 40px 20px; color: white;">
-            <p style="margin: 10px 0;">📚 Media Pembelajaran Interaktif - Pancasila & Kewarganegaraan</p>
-            <p style="margin: 5px 0; font-size: 0.9em; opacity: 0.8;">Materi: Musyawarah, Mufakat, dan Toleransi</p>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-8 text-center border-t border-slate-700">
+        <div class="max-w-6xl mx-auto px-4">
+            <p class="text-xs text-slate-500">
+                Dibuat dengan ❤️ oleh <strong class="text-slate-300">Danang Khoirul Albar</strong>
+            </p>
         </div>
-    </div>
+    </footer>
 
     <script>
-        function toggleCard(element) {
-            const content = element.querySelector('.card-content');
-            const wasActive = content.classList.contains('active');
+        // --- ENHANCED DATA OBJECT ---
+        const contentData = {
+            musyawarah: {
+                title: "Musyawarah",
+                color: "text-sky-600",
+                bg: "border-sky-300",
+                html: `
+                    <div class="space-y-6 fade-in h-[400px] overflow-y-auto pr-4 custom-scroll">
+                        <!-- Pengertian -->
+                        <div>
+                            <h5 class="font-bold text-slate-800 text-lg mb-2">1. Pengertian Musyawarah</h5>
+                            <p class="text-slate-600 mb-2">
+                                Secara bahasa, musyawarah berasal dari bahasa Arab <em>"syawara"</em> yang berarti berunding atau urun rembuk.
+                            </p>
+                            <p class="text-slate-600">
+                                Menurut istilah, musyawarah adalah pembahasan bersama dengan maksud mencapai keputusan atas penyelesaian masalah. Ini merupakan pengamalan <strong>Sila ke-4 Pancasila</strong>.
+                            </p>
+                        </div>
+                        
+                        <!-- Prinsip & Tujuan (Grid) -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div class="bg-sky-50 p-4 rounded-lg border border-sky-100">
+                                <h6 class="font-bold text-sky-800 mb-2">🏛️ Prinsip Musyawarah:</h6>
+                                <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                    <li>Bersumber pada sila ke-4 Pancasila.</li>
+                                    <li>Setiap peserta memiliki hak yang sama.</li>
+                                    <li>Tidak memaksakan kehendak.</li>
+                                    <li>Keputusan harus dapat dipertanggungjawabkan kepada Tuhan YME.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                                <h6 class="font-bold text-indigo-800 mb-2">🎯 Tujuan Musyawarah:</h6>
+                                <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                    <li>Mencapai <strong>mufakat</strong> (kesepakatan bersama).</li>
+                                    <li>Mendapatkan keputusan yang adil.</li>
+                                    <li>Menyelesaikan kesulitan atau masalah bersama.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Manfaat -->
+                        <div>
+                            <h5 class="font-bold text-slate-800 text-lg mb-2">2. Manfaat Musyawarah</h5>
+                            <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-slate-700">
+                                <li class="flex items-center space-x-2"><span class="text-emerald-500">✓</span> <span>Masalah segera terpecahkan.</span></li>
+                                <li class="flex items-center space-x-2"><span class="text-emerald-500">✓</span> <span>Melatih mengemukakan pendapat (mental).</span></li>
+                                <li class="flex items-center space-x-2"><span class="text-emerald-500">✓</span> <span>Menyatukan pendapat yang berbeda.</span></li>
+                                <li class="flex items-center space-x-2"><span class="text-emerald-500">✓</span> <span>Mencegah kekeliruan dan celaan.</span></li>
+                            </ul>
+                        </div>
+
+                        <!-- Contoh -->
+                        <div class="bg-amber-50 p-4 rounded-lg border border-amber-100">
+                            <h5 class="font-bold text-amber-800 text-lg mb-2">3. Contoh Penerapan</h5>
+                            <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
+                                <li><strong>Lingkungan Negara (Sejarah):</strong> Perumusan Pancasila & UUD 1945 oleh BPUPKI.</li>
+                                <li><strong>Lingkungan Sekolah:</strong> Pemilihan ketua kelas, penyusunan jadwal piket.</li>
+                                <li><strong>Lingkungan Keluarga:</strong> Diskusi pembagian tugas rumah, menentukan tujuan liburan.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            mufakat: {
+                title: "Mufakat",
+                color: "text-emerald-600",
+                bg: "border-emerald-300",
+                html: `
+                    <div class="space-y-6 fade-in">
+                        <div>
+                            <h5 class="font-bold text-slate-800 text-lg mb-2">1. Apa itu Mufakat?</h5>
+                            <p class="text-slate-600">Mufakat adalah hasil akhir dari musyawarah dimana <strong>semua pihak setuju</strong> dengan keputusan yang diambil tanpa paksaan. "Bulat air karena pembuluh, bulat kata karena mufakat."</p>
+                        </div>
+
+                        <div class="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-400">
+                            <h6 class="font-bold text-amber-800 mb-1">Jika Mufakat Gagal, Apa yang Dilakukan?</h6>
+                            <p class="text-sm text-slate-700 mb-2">Jika diskusi buntu (tidak ketemu jalan keluar), kita lakukan <strong>VOTING</strong>.</p>
+                            <div class="bg-white p-3 rounded border border-amber-200 text-sm">
+                                <strong>Voting (Pemungutan Suara):</strong> Keputusan diambil berdasarkan suara terbanyak. Contoh: Memilih ketua kelas.
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            toleransi: {
+                title: "Toleransi",
+                color: "text-rose-600",
+                bg: "border-rose-300",
+                html: `
+                    <div class="space-y-6 fade-in">
+                        <div>
+                            <h5 class="font-bold text-slate-800 text-lg mb-2">1. Pentingnya Toleransi (TP 2.2)</h5>
+                            <p class="text-slate-600">Toleransi adalah kunci utama musyawarah. Tanpa rasa saling menghargai, ego masing-masing akan bertabrakan.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div class="bg-emerald-50 p-4 rounded-lg">
+                                <h6 class="font-bold text-emerald-800 mb-2">✅ Jika Ada Toleransi:</h6>
+                                <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                    <li>Suasana kelas damai & tenang.</li>
+                                    <li>Keputusan (mufakat) cepat tercapai.</li>
+                                    <li>Semua orang merasa dihargai.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-rose-50 p-4 rounded-lg">
+                                <h6 class="font-bold text-rose-800 mb-2">⛔ Akibat Tidak Ada Toleransi (TP 2.1):</h6>
+                                <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                    <li>Terjadi pertengkaran/permusuhan.</li>
+                                    <li>Diskusi macet (tidak selesai).</li>
+                                    <li>Keputusan terasa tidak adil.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // --- SECTION 1: INTERACTION ---
+        function activateConcept(key) {
+            // Reset borders
+            ['musyawarah', 'mufakat', 'toleransi'].forEach(k => {
+                document.getElementById(`card-${k}`).classList.remove('border-sky-300', 'border-emerald-300', 'border-rose-300', 'ring-2', 'ring-offset-2', 'ring-sky-200');
+                document.getElementById(`card-${k}`).classList.add('border-transparent');
+            });
+
+            // Active State
+            const activeCard = document.getElementById(`card-${key}`);
+            const data = contentData[key];
             
-            // Close all other cards
-            document.querySelectorAll('.card-content.active').forEach(el => {
-                if (el !== content) {
-                    el.classList.remove('active');
+            activeCard.classList.remove('border-transparent');
+            activeCard.classList.add(data.bg, 'ring-2', 'ring-offset-2', 'ring-slate-200');
+
+            // Update Content
+            const detailContainer = document.getElementById('concept-detail');
+            const titleEl = document.getElementById('detail-title');
+            const contentEl = document.getElementById('detail-content');
+
+            // Fade out effect
+            detailContainer.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                titleEl.textContent = data.title;
+                titleEl.className = `text-3xl font-bold mb-4 border-b pb-4 ${data.color}`;
+                contentEl.innerHTML = data.html;
+                detailContainer.style.opacity = '1';
+            }, 200);
+        }
+
+        // Initialize first concept
+        activateConcept('musyawarah');
+
+        // --- SECTION 2: CHART SIMULATION ---
+        const ctx = document.getElementById('impactChart').getContext('2d');
+        const impactChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Keberhasilan Mufakat', 'Potensi Konflik'],
+                datasets: [{
+                    label: 'Probabilitas (%)',
+                    data: [50, 50],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.7)', // Emerald
+                        'rgba(244, 63, 94, 0.7)'   // Rose
+                    ],
+                    borderColor: [
+                        'rgb(16, 185, 129)',
+                        'rgb(244, 63, 94)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.raw + '%';
+                            }
+                        }
+                    }
                 }
-            });
-            
-            // Toggle current card
-            content.classList.toggle('active', !wasActive);
-        }
-
-        function updateTolerance() {
-            const slider = document.getElementById('toleranceSlider');
-            const value = parseInt(slider.value);
-            
-            document.getElementById('toleranceValue').textContent = value + '%';
-            
-            // Update result box
-            const resultBox = document.getElementById('resultBox');
-            let resultText, borderColor, bgColor;
-            
-            if (value < 30) {
-                resultText = '🔴 Toleransi Rendah - Konflik Sangat Mungkin Terjadi! (' + value + '%)';
-                borderColor = '#ef4444';
-                bgColor = '#fee2e2';
-            } else if (value < 60) {
-                resultText = '🟡 Toleransi Sedang - Kesepakatan Mungkin Tercapai (' + value + '%)';
-                borderColor = '#fbbf24';
-                bgColor = '#fef3c7';
-            } else if (value < 85) {
-                resultText = '🟢 Toleransi Tinggi - Kesepakatan Kemungkinan Besar Tercapai! (' + value + '%)';
-                borderColor = '#10b981';
-                bgColor = '#d1fae5';
-            } else {
-                resultText = '🟢 Toleransi Sangat Tinggi - Mufakat PASTI TERCAPAI! (' + value + '%)';
-                borderColor = '#10b981';
-                bgColor = '#a7f3d0';
             }
-            
-            resultBox.style.borderColor = borderColor;
-            resultBox.style.background = bgColor;
-            document.getElementById('resultText').textContent = resultText;
-            
-            // Update probability rates
-            const successRate = value;
-            const failureRate = 100 - value;
-            
-            document.getElementById('successRate').textContent = successRate + '%';
-            document.getElementById('failureRate').textContent = failureRate + '%';
-        }
-
-        function selectAnswer(answer, element) {
-            // Remove previous selection
-            document.querySelectorAll('.option').forEach(el => {
-                el.classList.remove('selected');
-            });
-            
-            // Add selection to clicked option
-            element.classList.add('selected');
-            
-            // Hide all feedbacks
-            document.getElementById('feedback1').classList.remove('show');
-            document.getElementById('feedback2').classList.remove('show');
-            document.getElementById('feedback3').classList.remove('show');
-            
-            // Show relevant feedback
-            document.getElementById('feedback' + answer).classList.add('show');
-        }
-
-        function answerReflection(answer) {
-            document.getElementById('responseYes').classList.remove('show');
-            document.getElementById('responseNeed').classList.remove('show');
-            
-            if (answer === 'yes') {
-                document.getElementById('responseYes').classList.add('show');
-            } else {
-                document.getElementById('responseNeed').classList.add('show');
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            updateTolerance();
         });
+
+        const slider = document.getElementById('toleranceRange');
+        const statusDesc = document.getElementById('status-desc');
+
+        slider.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            
+            // Logic: Higher Tolerance = Higher Mufakat, Lower Conflict
+            const successRate = val; 
+            const conflictRate = 100 - val;
+
+            // Update Chart
+            impactChart.data.datasets[0].data = [successRate, conflictRate];
+            impactChart.update();
+
+            // Update Text
+            if (val < 30) {
+                statusDesc.innerHTML = `<span class="text-rose-600 font-bold">BAHAYA! (TP 2.1)</span> Suasana kelas panas. Banyak yang memotong pembicaraan. Risiko pertengkaran tinggi. Mufakat GAGAL.`;
+            } else if (val < 70) {
+                statusDesc.innerHTML = `<span class="text-orange-500 font-bold">SEDANG.</span> Diskusi berjalan tapi masih ada yang egois. Butuh kesabaran lebih untuk mencapai mufakat.`;
+            } else {
+                statusDesc.innerHTML = `<span class="text-emerald-600 font-bold">HEBAT! (TP 2.2)</span> Suasana damai. Semua mendengarkan. Keputusan (Mufakat) cepat tercapai.`;
+            }
+        });
+
+        // --- SECTION 4: CASE STUDY ---
+        function resolveCase(choice) {
+            document.getElementById('story-stage-1').classList.add('hidden');
+            const resultDiv = document.getElementById('story-result');
+            const contentDiv = document.getElementById('result-content');
+            
+            resultDiv.classList.remove('hidden');
+
+            if (choice === 'bad') {
+                contentDiv.innerHTML = `
+                    <div class="text-6xl mb-4">😡 💥</div>
+                    <h3 class="text-2xl font-bold text-rose-600 mb-2">Salah!</h3>
+                    <p class="text-slate-600">
+                        Sikap memaksakan kehendak membuat teman lain kesal. Terjadi keributan di kelas. 
+                        <strong>Tidak ada mufakat yang tercapai.</strong>
+                    </p>
+                    <p class="mt-4 text-sm bg-rose-50 p-2 rounded inline-block text-rose-700">Pelajaran: Jangan egois saat musyawarah.</p>
+                `;
+            } else {
+                contentDiv.innerHTML = `
+                    <div class="text-6xl mb-4">🏖️ 🤝 🏛️</div>
+                    <h3 class="text-2xl font-bold text-emerald-600 mb-2">Benar!</h3>
+                    <p class="text-slate-600">
+                        Sikap Budi sangat toleran! Teman-teman menghargai Budi. 
+                        Voting dilakukan dengan damai. Apapun hasilnya, <strong>Mufakat tercapai</strong> dan kelas tetap rukun.
+                    </p>
+                    <p class="mt-4 text-sm bg-emerald-50 p-2 rounded inline-block text-emerald-700">Pelajaran: Menghargai suara terbanyak adalah kunci.</p>
+                `;
+            }
+        }
+
+        function resetCase() {
+            document.getElementById('story-result').classList.add('hidden');
+            document.getElementById('story-stage-1').classList.remove('hidden');
+        }
+
+        // Smooth Scroll
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
     </script>
 </body>
 </html>
